@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom';
 import request from 'superagent';
 
 const CodeBlock = (props) => {
+  const lines = props.code.split('\n').map(m => {
+    return <p className="code-line">{m}</p>
+  });
   return (
-    <code>{props.children}</code>
+    <code>{lines}</code>
   );
 };
 
@@ -30,7 +33,6 @@ class PlayGround extends Component {
       .end((err, res) => {
         this.setState({ codes, result: res.body });
         console.log(res);
-        console.log(this.state);
       });
   };
 
@@ -57,11 +59,11 @@ class PlayGround extends Component {
             <h5>Output</h5>
             <div>
               <h6>stdout</h6>
-              <CodeBlock>{this.state.result.stdout}</CodeBlock>
+              <CodeBlock code={this.state.result.stdout} />
             </div>
             <div>
               <h6>stderr</h6>
-              <CodeBlock>{this.state.result.stderr}</CodeBlock>
+              <CodeBlock code={this.state.result.stderr} />
             </div>
           </div>
         </div>
