@@ -8,7 +8,8 @@ const fs = require('fs');
 const exec = util.promisify(require('child_process').exec);
 const path = require('path');
 
-require('dotenv').config()
+// require('dotenv').config()
+const port = 3001;
 
 const app = express();
 app.use(bodyParser.json());
@@ -22,8 +23,8 @@ app.post('/api/play', async function (req, res) {
   console.log(req.body, out);
 });
 
-app.listen(process.env.PORT, function () {
-  console.log(`API server listening on port ${process.env.PORT}!`);
+app.listen(port, function () {
+  console.log(`API server listening on port ${port}!`);
 })
 
 const writeFile = util.promisify(fs.writeFile);
