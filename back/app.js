@@ -23,9 +23,14 @@ app.use((req, res, next) => {
 app.post('/api/play', async function (req, res) {
   const { ext, codes } = req.body;
   const file = await createSourceFile(ext, codes);
-  const out = await runSourceFile(file);
-  res.send(out);
-  console.log(req.body, out);
+  try {
+    const out = await runSourceFile(file);
+    res.send(out);
+    console.log(req.body, out);
+  } catch (e) {
+    res.send(e);
+    console.error(req.body, e);
+  }
 });
 
 app.listen(port, function () {
