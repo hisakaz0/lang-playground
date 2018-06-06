@@ -8,3 +8,7 @@ body {
   padding: 0;
   margin: 0;
 }
+
+.App .lang-list {
+  margin-top: 1rem;
+}
