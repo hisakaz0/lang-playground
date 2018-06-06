@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import request from 'superagent';
+import CodeMirror from 'react-codemirror';
 
 import langList from './lang';
 
@@ -79,9 +80,7 @@ class Playground extends Component {
           <div className="input-program">
             <h5>Input</h5>
             <div>
-              <textarea id='input-program' className="codes"
-                name="codes" rows="10" cols="75"
-                onChange={(e) => this.setCodes(e.target.value)} />
+              <CodeMirror onChange={this.setCodes} />
             </div>
             <div className="columns">
               <div className="column">
