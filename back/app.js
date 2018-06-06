@@ -73,8 +73,12 @@ async function runSourceFile (lang, file) {
         const compileCommand = `kotlinc ${basename + lang.ext}`;
         const runComamnd = `kotlin ${className}`;
         await exec(compileCommand, { cwd: dirname });
-        const res = await exec(runComamnd, { cwd: dirname });
-        resolve(res);
+        try {
+          const res = await exec(runComamnd, { cwd: dirname });
+          resolve(res);
+        } catch (e) {
+          console.log(e);
+        }
       });
       break;
     case 'python3':

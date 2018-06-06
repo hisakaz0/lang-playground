@@ -18,7 +18,7 @@ const CodeBlock = (props) => {
   );
 };
 
-class PlayGround extends Component {
+class Playground extends Component {
   constructor(props) {
     const { match } = props;
     super(props);
@@ -113,4 +113,4 @@ class PlayGround extends Component {
   }
 }
 
-export default PlayGround;
+export default Playground;
