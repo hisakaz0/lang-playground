@@ -2,5 +2,6 @@
   { "name": "shell", "ext": ".sh" },
   { "name": "c", "ext": ".c" },
   { "name": "kotlin", "ext": ".kt" },
-  { "name": "python3", "ext": ".py3" }
+  { "name": "python3", "ext": ".py3" },
+  { "name": "javascript", "ext": ".js" }
 ]

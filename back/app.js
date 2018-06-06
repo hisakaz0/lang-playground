@@ -72,9 +72,6 @@ async function runSourceFile (lang, file) {
           .replace(/-/g, '_');
         const compileCommand = `kotlinc ${basename + lang.ext}`;
         const runComamnd = `kotlin ${className}`;
-        console.log(dirname);
-        console.log(compileCommand);
-        console.log(runComamnd);
         await exec(compileCommand, { cwd: dirname });
         const res = await exec(runComamnd, { cwd: dirname });
         resolve(res);
@@ -83,6 +80,12 @@ async function runSourceFile (lang, file) {
     case 'python3':
       return new Promise(async resolve => {
         const res = exec(`python3 ${file}`);
+        resolve(res);
+      });
+      break;
+    case 'javascript':
+      return new Promise(async resolve => {
+      const res = exec(`node ${file}`);
         resolve(res);
       });
       break;
