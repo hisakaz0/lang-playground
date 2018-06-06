@@ -6,7 +6,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import App from './App';
-import PlayGround from './PlayGround';
+import Playground from './Playground';
 import langList from './lang';
 
 const validLangRoute =
@@ -17,7 +17,7 @@ ReactDOM.render(
   <BrowserRouter>
     <div>
       <Route exact path="/" component={App} />
-      <Route exact path={validLangRoute} component={PlayGround} />
+      <Route exact path={validLangRoute} component={Playground} />
     </div>
   </BrowserRouter>,
   document.getElementById('root')

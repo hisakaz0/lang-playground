@@ -21,14 +21,16 @@ const LangListEls = (props) => {
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="home">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to Lang playground</h1>
+          <h1 className="App-title">Welcome to Lang Playground</h1>
         </header>
         <div className="container lang-list">
-          <h2>List of languages</h2>
-          <LangListEls langs={langList} />
+          <div className="m-2">
+            <h2>List of languages</h2>
+            <LangListEls langs={langList} />
+          </div>
         </div>
       </div>
     );

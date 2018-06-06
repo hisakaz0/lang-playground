@@ -14,7 +14,7 @@ const CodeBlock = (props) => {
     );
   });
   return (
-    <pre className="code" data-lang="shell"><code>{lines}</code></pre>
+    <pre className="code"><code>{lines}</code></pre>
   );
 };
 
@@ -36,16 +36,28 @@ class PlayGround extends Component {
   }
 
 
-  runCodes = () => {
+  runCodes = (e) => {
     const { codes, lang } = this.state;
-    request
-      .post('http://localhost:3001/api/play')
-      .type('form')
-      .send({ lang, codes: codes })
-      .end((err, res) => {
-        this.setState({ codes, result: res.body });
-        console.log(res);
+    const el = e.target;
+
+    new Promise(resolve => {
+      el.classList.add('loading');
+      resolve();
+    }).then(() => {
+      return new Promise(resolve => {
+        const res = request
+          .post('http://localhost:3001/api/play')
+          .type('form')
+          .send({ lang, codes: codes })
+          .then(res => {
+            this.setState({ codes, result: res.body });
+            return res;
+          });
+        resolve(res);
       });
+    }).then(res => {
+      el.classList.remove('loading');
+    });
   };
 
   setCodes = (codes) => {
@@ -61,8 +73,8 @@ class PlayGround extends Component {
 
   render () {
     return (
-      <div className="play-ground container">
-        <div>
+      <div className="playground container pt-2">
+        <div className="m-2">
           <h3 className="text-capitalize">{this.state.lang.name}</h3>
           <div className="input-program">
             <h5>Input</h5>
@@ -74,21 +86,22 @@ class PlayGround extends Component {
             <div className="columns">
               <div className="column">
                 <button className='btn btn-success'
-                  onClick={(e) => this.runCodes()}>Run</button>&nbsp;
+                  onClick={(e) => this.runCodes(e)}>Run</button>&nbsp;
                 <button className='btn btn-error'
                   onClick={(e) => this.resetCodes()}>Clear</button>
               </div>
             </div>
           </div>
-          <div className="result-program">
+          <div className="divider p-2"></div>
+          <div className="result-program pt-2">
             <h5>Output</h5>
             <div>
               <h6>stdout</h6>
-              <CodeBlock code={this.state.result.stdout} />
+              <CodeBlock lang={this.state.lang} code={this.state.result.stdout} />
             </div>
             <div>
               <h6>stderr</h6>
-              <CodeBlock code={this.state.result.stderr} />
+              <CodeBlock lang={this.state.lang} code={this.state.result.stderr} />
             </div>
           </div>
         </div>
