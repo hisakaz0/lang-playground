@@ -12,3 +12,8 @@ body {
 .App .lang-list {
   margin-top: 1rem;
 }
+
+.codes {
+  font-family: "SF Mono","Segoe UI Mono","Roboto Mono",Menlo,Courier,monospace;
+  font-size: .6rem;
+}
