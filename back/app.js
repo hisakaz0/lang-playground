@@ -21,10 +21,10 @@ app.use((req, res, next) => {
 });
 
 app.post('/api/play', async function (req, res) {
-  const { ext, codes } = req.body;
-  const file = await createSourceFile(ext, codes);
+  const { lang, codes } = req.body;
+  const file = await createSourceFile(lang, codes);
   try {
-    const out = await runSourceFile(file);
+    const out = await runSourceFile(lang, file);
     res.send(out);
     console.log(req.body, out);
   } catch (e) {
@@ -38,21 +38,52 @@ app.listen(port, function () {
 })
 
 const writeFile = util.promisify(fs.writeFile);
-async function createSourceFile (ext, codes) {
-  const tmp = tempfile(ext);
+async function createSourceFile (lang, codes) {
+  const tmp = tempfile(lang.ext);
   await writeFile(tmp, codes);
   return new Promise(resolve => {
     resolve(tmp);
   });
 };
 
-async function runSourceFile (file) {
-  const ext = path.extname(path.basename(file));
-  switch(ext) {
-    case '.sh':
-      const { stdout, stderr } = await exec(`sh ${file}`);
-      return new Promise(resolve => {
-        resolve({ stdout: stdout, stderr: stderr });
+async function runSourceFile (lang, file) {
+  switch(lang.name) {
+    case 'shell':
+      return new Promise(async resolve => {
+        const res = await exec(`sh ${file}`);
+        resolve(res);
+      });
+      break;
+    case 'c':
+      const tmpOut = tempfile();
+      return new Promise(async resolve => {
+        await exec(`gcc ${file} -o ${tmpOut}`);
+        const res = await exec(`${tmpOut}`);
+        resolve(res);
+      });
+      break;
+    case 'kotlin':
+      return new Promise(async resolve => {
+        const basename = path.basename(file, lang.ext);
+        const dirname = path.dirname(file);
+        const className = (basename.match(/^[0-9]/) === null ?
+          basename.capitalize() + "Kt" :  // alphabet
+          "_" + basename + "Kt") // number
+          .replace(/-/g, '_');
+        const compileCommand = `kotlinc ${basename + lang.ext}`;
+        const runComamnd = `kotlin ${className}`;
+        console.log(dirname);
+        console.log(compileCommand);
+        console.log(runComamnd);
+        await exec(compileCommand, { cwd: dirname });
+        const res = await exec(runComamnd, { cwd: dirname });
+        resolve(res);
+      });
+      break;
+    case 'python3':
+      return new Promise(async resolve => {
+        const res = exec(`python3 ${file}`);
+        resolve(res);
       });
       break;
     default:
@@ -62,3 +93,7 @@ async function runSourceFile (file) {
   }
 }
 
+
+String.prototype.capitalize = function(){
+  return this.charAt(0).toUpperCase() + this.slice(1);
+}

@@ -41,7 +41,7 @@ class PlayGround extends Component {
     request
       .post('http://localhost:3001/api/play')
       .type('form')
-      .send({ ext: lang.ext, codes: codes })
+      .send({ lang, codes: codes })
       .end((err, res) => {
         this.setState({ codes, result: res.body });
         console.log(res);
