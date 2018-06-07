@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import request from 'superagent';
+
 import CodeMirror from 'react-codemirror';
+import 'codemirror/mode/javascript/javascript'; // javascript
+import 'codemirror/mode/clike/clike'; // c, cpp, java, kotlin
+import 'codemirror/mode/python/python'; // python
+import 'codemirror/mode/shell/shell'; // shell
+import 'codemirror/lib/codemirror.css';
 
 import langList from './lang';
 
@@ -80,7 +86,8 @@ class Playground extends Component {
           <div className="input-program">
             <h5>Input</h5>
             <div>
-              <CodeMirror onChange={this.setCodes} />
+              <CodeMirror onChange={this.setCodes}
+                options={{ mode: this.state.lang.name }} />
             </div>
             <div className="columns">
               <div className="column">
