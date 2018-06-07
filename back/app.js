@@ -74,16 +74,16 @@ async function runSourceFile (lang, file) {
       break;
     case 'kotlin':
       return new Promise(async resolve => {
-        const basename = path.basename(file, lang.ext);
-        const dirname = path.dirname(file);
-        const className = (basename.match(/^[0-9]/) === null ?
-          basename.capitalize() + "Kt" :  // alphabet
-          "_" + basename + "Kt") // number
-          .replace(/-/g, '_');
-        const compileCommand = `kotlinc ${basename + lang.ext}`;
-        const runComamnd = `kotlin ${className}`;
-        await exec(compileCommand, { cwd: dirname });
         try {
+          const basename = path.basename(file, lang.ext);
+          const dirname = path.dirname(file);
+          const className = (basename.match(/^[0-9]/) === null ?
+            basename.capitalize() + "Kt" :  // alphabet
+            "_" + basename + "Kt") // number
+            .replace(/-/g, '_');
+          const compileCommand = `kotlinc ${basename + lang.ext}`;
+          const runComamnd = `kotlin ${className}`;
+          await exec(compileCommand, { cwd: dirname });
           const res = await exec(runComamnd, { cwd: dirname });
           resolve(res);
         } catch (e) {
