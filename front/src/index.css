@@ -42,4 +42,7 @@ body {
 .playground .input-program .bg-error {
   width: 80%;
 }
+.playground .input-program .bg-primary {
+  width: 80%;
+}
 

@@ -41,7 +41,8 @@ class Playground extends Component {
         stdout: '',
         stderr: ''
       },
-      lang: langList.find(l => l.name === match.params.lang)
+      lang: langList.find(l => l.name === match.params.lang),
+      editor: undefined
     };
   }
 
@@ -58,9 +59,11 @@ class Playground extends Component {
         const res = request
           .post('http://localhost:3001/api/play')
           .type('form')
-          .send({ lang, codes: codes })
+          .send({ lang, codes })
           .then(res => {
-            this.setState({ codes, result: res.body });
+            this.setState(
+              Object.assign(this.state, { result: res.body })
+            );
             return res;
           });
         resolve(res);
@@ -71,14 +74,12 @@ class Playground extends Component {
   };
 
   setCodes = (codes) => {
-    const { result, lang } = this.state;
-    this.setState({ codes, result, lang });
+    this.setState(Object.assign(this.state, { codes }));
   };
 
   resetCodes = () => {
-    document.getElementById('input-program').value = '';
-    const { result, lang } = this.state;
-    this.setState({ codes: '', result, lang });
+    this.setState(Object.assign(this.state, { codes: '' }));
+    this.state.editor.codeMirror.doc.setValue('');
   }
 
   render () {
@@ -104,14 +105,12 @@ class Playground extends Component {
           <div className="input-program">
             <h5>Input</h5>
             <div>
-              <CodeMirror className="input-code-area" onChange={this.setCodes} options={codeMirrorConfig} />
+              <CodeMirror className="input-code-area" ref={(c) => this.state.editor = c}
+                onChange={this.setCodes} options={codeMirrorConfig} />
             </div>
             <div className="columns">
-              <div className="column col-3">
-                <div className="btn-group btn-group-block">
-                  <button className='btn bg-primary' onClick={(e) => this.runCodes(e)}>Run</button>
-                  <button className='btn bg-success'>Save</button>
-                </div>
+              <div className="column col-2">
+                <button className='btn bg-primary' onClick={(e) => this.runCodes(e)}>Run</button>
               </div>
               <div className="column col-2 col-ml-auto text-right">
                 <button className='btn bg-error' onClick={(e) => this.resetCodes()}>Clear</button>
