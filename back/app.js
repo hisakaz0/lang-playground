@@ -89,7 +89,13 @@ async function runSourceFile (lang, file) {
       break;
     case 'javascript':
       return new Promise(async resolve => {
-      const res = exec(`node ${file}`);
+        const res = exec(`node ${file}`);
+        resolve(res);
+      });
+      break;
+    case 'ruby':
+      return new Promise(async resolve => {
+        const res = exec(`ruby ${file}`);
         resolve(res);
       });
       break;

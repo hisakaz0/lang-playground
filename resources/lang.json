@@ -3,5 +3,6 @@
   { "name": "c", "ext": ".c" },
   { "name": "kotlin", "ext": ".kt" },
   { "name": "python3", "ext": ".py3" },
-  { "name": "javascript", "ext": ".js" }
+  { "name": "javascript", "ext": ".js" },
+  { "name": "ruby", "ext": ".rb" }
 ]

@@ -3,12 +3,17 @@ import { Link } from 'react-router-dom';
 
 import request from 'superagent';
 
+// CodeMirror
 import CodeMirror from 'react-codemirror';
-import 'codemirror/mode/javascript/javascript'; // javascript
-import 'codemirror/mode/clike/clike'; // c, cpp, java, kotlin
-import 'codemirror/mode/python/python'; // python
-import 'codemirror/mode/shell/shell'; // shell
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/clike/clike';
+import 'codemirror/mode/python/python';
+import 'codemirror/mode/shell/shell';
+import 'codemirror/mode/ruby/ruby';
+
 import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/idea.css';
+
 
 import langList from './lang';
 
@@ -24,6 +29,7 @@ const CodeBlock = (props) => {
     <pre className="code"><code>{lines}</code></pre>
   );
 };
+
 
 class Playground extends Component {
   constructor(props) {
@@ -79,6 +85,11 @@ class Playground extends Component {
   }
 
   render () {
+    const codeMirrorConfig = {
+      mode: this.state.lang.name,
+      lineNumbers: true,
+      theme: 'idea'
+    };
     return (
       <div className="playground container pt-2">
         <div className="m-2">
@@ -86,8 +97,7 @@ class Playground extends Component {
           <div className="input-program">
             <h5>Input</h5>
             <div>
-              <CodeMirror onChange={this.setCodes}
-                options={{ mode: this.state.lang.name }} />
+              <CodeMirror onChange={this.setCodes} options={codeMirrorConfig} />
             </div>
             <div className="columns">
               <div className="column">
