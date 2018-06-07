@@ -50,16 +50,26 @@ async function runSourceFile (lang, file) {
   switch(lang.name) {
     case 'shell':
       return new Promise(async resolve => {
-        const res = await exec(`sh ${file}`);
-        resolve(res);
+        try {
+          const res = await exec(`sh ${file}`);
+          resolve(res);
+        } catch (e) {
+          console.error(e);
+          resolve(e);
+        }
       });
       break;
     case 'c':
       const tmpOut = tempfile();
       return new Promise(async resolve => {
-        await exec(`gcc ${file} -o ${tmpOut}`);
-        const res = await exec(`${tmpOut}`);
-        resolve(res);
+        try {
+          await exec(`gcc ${file} -o ${tmpOut}`);
+          const res = await exec(`${tmpOut}`);
+          resolve(res);
+        } catch (e) {
+          console.error(e);
+          resolve(e);
+        }
       });
       break;
     case 'kotlin':
@@ -77,26 +87,42 @@ async function runSourceFile (lang, file) {
           const res = await exec(runComamnd, { cwd: dirname });
           resolve(res);
         } catch (e) {
-          console.log(e);
+          console.error(e);
+          resolve(e);
         }
       });
       break;
     case 'python3':
       return new Promise(async resolve => {
-        const res = exec(`python3 ${file}`);
-        resolve(res);
+        try {
+          const res = exec(`python3 ${file}`);
+          resolve(res);
+        } catch (e) {
+          console.error(e);
+          resolve(e);
+        }
       });
       break;
     case 'javascript':
       return new Promise(async resolve => {
-        const res = exec(`node ${file}`);
-        resolve(res);
+        try {
+          const res = exec(`node ${file}`);
+          resolve(res);
+        } catch (e) {
+          console.error(e);
+          resolve(e);
+        }
       });
       break;
     case 'ruby':
       return new Promise(async resolve => {
-        const res = exec(`ruby ${file}`);
-        resolve(res);
+        try {
+          const res = exec(`ruby ${file}`);
+          resolve(res);
+        } catch (e) {
+          console.error(e);
+          resolve(e);
+        }
       });
       break;
     default:
