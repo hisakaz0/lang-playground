@@ -41,10 +41,7 @@ class Playground extends Component {
         stdout: '',
         stderr: ''
       },
-      lang: {
-        name:match.params.lang,
-        ext: langList.find(l => l.name === match.params.lang).ext
-      }
+      lang: langList.find(l => l.name === match.params.lang)
     };
   }
 
@@ -86,9 +83,14 @@ class Playground extends Component {
 
   render () {
     const codeMirrorConfig = {
-      mode: this.state.lang.name,
+      mode: (() => {
+        try {
+          return this.state.lang.options.codeMirror.mode;
+        } catch (e) {
+          return this.state.lang.name;
+        }
+      })(),
       lineNumbers: true,
-      theme: 'idea'
     };
     return (
       <div className="playground container pt-2">
@@ -105,11 +107,14 @@ class Playground extends Component {
               <CodeMirror className="input-code-area" onChange={this.setCodes} options={codeMirrorConfig} />
             </div>
             <div className="columns">
-              <div className="column">
-                <button className='btn btn-success'
-                  onClick={(e) => this.runCodes(e)}>Run</button>&nbsp;
-                <button className='btn btn-error'
-                  onClick={(e) => this.resetCodes()}>Clear</button>
+              <div className="column col-3">
+                <div className="btn-group btn-group-block">
+                  <button className='btn bg-primary' onClick={(e) => this.runCodes(e)}>Run</button>
+                  <button className='btn bg-success'>Save</button>
+                </div>
+              </div>
+              <div className="column col-2 col-ml-auto text-right">
+                <button className='btn bg-error' onClick={(e) => this.resetCodes()}>Clear</button>
               </div>
             </div>
           </div>

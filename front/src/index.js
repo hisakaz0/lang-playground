@@ -16,8 +16,7 @@ const validLangRoute =
 ReactDOM.render(
   <BrowserRouter>
     <div>
-      <Redirect from="/" to="lang" />
-      <Redirect from="/lang/lang" to="lang" />
+      <Redirect exact from="/" to="lang" />
       <Route exact path="/lang" component={App} />
       <Route exact path={validLangRoute} component={Playground} />
     </div>

@@ -1,7 +1,19 @@
 [
   { "name": "shell", "ext": ".sh" },
-  { "name": "c", "ext": ".c" },
-  { "name": "kotlin", "ext": ".kt" },
+  { "name": "c", "ext": ".c" ,
+    "options": {
+      "codeMirror": {
+        "mode": "clike"
+      }
+    }
+  },
+  { "name": "kotlin", "ext": ".kt",
+    "options": {
+      "codeMirror": {
+        "mode": "clike"
+      }
+    }
+  },
   { "name": "python3", "ext": ".py3" },
   { "name": "javascript", "ext": ".js" },
   { "name": "ruby", "ext": ".rb" }

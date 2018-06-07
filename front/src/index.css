@@ -39,3 +39,7 @@ body {
   margin-bottom: 1rem;
 }
 
+.playground .input-program .bg-error {
+  width: 80%;
+}
+
