@@ -9,8 +9,15 @@ body {
   margin: 0;
 }
 
+.home {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .home .lang-list {
-  margin-top: 1rem;
+  padding-top: 1rem;
+  border: 1px solid rgba(0, 0, 0, .2);
 }
 
 .codes {
@@ -18,7 +25,17 @@ body {
   font-size: .6rem;
 }
 
+.playground {
+  width: 800px;
+}
 
 .playground .divider {
   margin-top: 1rem;
 }
+
+.playground .input-code-area {
+  font-size: .7rem;
+  border: 1px solid rgba(0, 0, 0, .2);
+  margin-bottom: 1rem;
+}
+

@@ -93,11 +93,16 @@ class Playground extends Component {
     return (
       <div className="playground container pt-2">
         <div className="m-2">
-          <h3 className="text-capitalize">{this.state.lang.name}</h3>
+          <h3 className="text-capitalize">
+            <ul className="breadcrumb">
+              <li className="breadcrumb-item"><Link to="/lang">Lang</Link></li>
+              <li className="breadcrumb-item">{this.state.lang.name}</li>
+            </ul>
+          </h3>
           <div className="input-program">
             <h5>Input</h5>
             <div>
-              <CodeMirror onChange={this.setCodes} options={codeMirrorConfig} />
+              <CodeMirror className="input-code-area" onChange={this.setCodes} options={codeMirrorConfig} />
             </div>
             <div className="columns">
               <div className="column">
@@ -122,7 +127,7 @@ class Playground extends Component {
           </div>
         </div>
         <footer>
-          <p><Link to="/">Top</Link></p>
+          <p><Link to="/lang">Back to lang-list</Link></p>
         </footer>
       </div>
     );

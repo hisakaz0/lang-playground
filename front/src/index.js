@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
 import App from './App';
 import Playground from './Playground';
@@ -16,7 +16,9 @@ const validLangRoute =
 ReactDOM.render(
   <BrowserRouter>
     <div>
-      <Route exact path="/" component={App} />
+      <Redirect from="/" to="lang" />
+      <Redirect from="/lang/lang" to="lang" />
+      <Route exact path="/lang" component={App} />
       <Route exact path={validLangRoute} component={Playground} />
     </div>
   </BrowserRouter>,
